@@ -85,7 +85,7 @@ elif st.session_state.pantalla == 'juego':
     with col_personaje:
         # 2. Renderizamos tu imagen del genio en la izquierda
         # Asegúrate de subir el archivo 'image_397e12.jpg' a tu repositorio de GitHub
-        st.image("image_397e12.jpg", use_container_width=True)
+        st.image("personaje juego.jpg", use_container_width=True)
         
     with col_interfaz:
         # --- RENDERIZADO DE PREGUNTAS ---
