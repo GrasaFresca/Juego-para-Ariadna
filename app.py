@@ -2,11 +2,12 @@ import streamlit as st
 import pandas as pd
 from github import Github
 import io
+import time  # Importamos time para manejar la pausa de la animación
 
 # 1. Configuración general
 st.set_page_config(page_title="Akinator: Ley AntiLavado", layout="centered")
 
-# OJO AQUÍ: Pon tu usuario de GitHub. El nombre del repo ya lo saqué de tu error.
+# OJO AQUÍ: Pon tu usuario de GitHub. 
 REPO_NAME = "TU_USUARIO/juego-para-ariadna" 
 CSV_FILENAME = "arbol_decisiones_antilavado.csv"
 
@@ -77,7 +78,6 @@ elif st.session_state.pantalla == 'juego':
     col_personaje, col_interfaz = st.columns([1, 1.5], gap="large")
     
     with col_personaje:
-        # Se queda el nombre de tu archivo de imagen que vi en tu código
         st.image("personaje juego.jpg", use_container_width=True)
         
     with col_interfaz:
@@ -122,11 +122,16 @@ elif st.session_state.pantalla == 'juego':
                 st.write("¿Adiviné correctamente?")
                 
                 col_acierto, col_error = st.columns(2)
+                
+                # ---> AQUÍ ESTÁ EL AJUSTE PARA VOLVER AL INICIO <---
                 with col_acierto:
                     if st.button("¡Sí, acertaste!", type="primary", use_container_width=True):
                         st.balloons()
-                        st.session_state.nodo_actual = 'root'
+                        st.session_state.pantalla = 'inicio' # Te manda a la Interfaz 1
+                        st.session_state.nodo_actual = 'root' # Resetea el puntero de la matriz
+                        time.sleep(1.5) # Pausa dramática para ver los globos
                         st.rerun()
+                        
                 with col_error:
                     if st.button("No, te equivocaste", use_container_width=True):
                         st.session_state.fallo_inferencia = True
