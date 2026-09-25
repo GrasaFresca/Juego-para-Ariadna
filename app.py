@@ -66,28 +66,93 @@ if st.session_state.pantalla == 'inicio':
             st.rerun()
 
 # ==========================================
-# INTERFAZ 2: PANTALLA DEL JUEGO
+# INTERFAZ 2: PANTALLA DEL JUEGO (LAYOUT AKINATOR)
 # ==========================================
 elif st.session_state.pantalla == 'juego':
     if st.button("🔙 Volver al inicio"):
         st.session_state.pantalla = 'inicio'
         st.rerun()
         
-    st.divider()
+    st.write("") # Espaciador
+    
+    # Extraemos los datos del nodo actual
     nodo = arbol[st.session_state.nodo_actual]
     
-    # --- RENDERIZADO DE PREGUNTAS ---
-    if nodo['tipo'] == 'pregunta':
-        st.subheader(nodo['texto'])
-        col_si, col_no = st.columns(2)
-        with col_si:
-            if st.button("Sí", use_container_width=True):
-                st.session_state.nodo_actual = nodo['rama_si']
-                st.rerun()
-        with col_no:
-            if st.button("No", use_container_width=True):
-                st.session_state.nodo_actual = nodo['rama_no']
-                st.rerun()
+    # 1. Sistema de grilla: Partimos la pantalla en dos columnas
+    # La proporción [1, 1.5] le da un poco más de espacio a los botones que a la imagen
+    col_personaje, col_interfaz = st.columns([1, 1.5], gap="large")
+    
+    with col_personaje:
+        # 2. Renderizamos tu imagen del genio en la izquierda
+        # Asegúrate de subir el archivo 'image_397e12.jpg' a tu repositorio de GitHub
+        st.image("image_397e12.jpg", use_container_width=True)
+        
+    with col_interfaz:
+        # --- RENDERIZADO DE PREGUNTAS ---
+        if nodo['tipo'] == 'pregunta':
+            
+            # 3. Inyección de CSS para simular el globo de texto del genio
+            globo_texto = f"""
+            <div style='
+                background-color: #ffffff; 
+                padding: 25px; 
+                border-radius: 15px; 
+                text-align: center; 
+                margin-bottom: 30px; 
+                box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+                border-left: 5px solid #2e86c1;'>
+                <h4 style='color: #1f2937; margin: 0;'>{nodo['texto']}</h4>
+            </div>
+            """
+            st.markdown(globo_texto, unsafe_allow_html=True)
+            
+            # Renderizamos los botones debajo del globo de texto
+            col_si, col_no = st.columns(2)
+            with col_si:
+                if st.button("Sí", use_container_width=True, type="primary"):
+                    st.session_state.nodo_actual = nodo['rama_si']
+                    st.rerun()
+            with col_no:
+                if st.button("No", use_container_width=True):
+                    st.session_state.nodo_actual = nodo['rama_no']
+                    st.rerun()
+                    
+        # --- RENDERIZADO DE RESULTADOS ---
+        elif nodo['tipo'] == 'resultado':
+            
+            if not st.session_state.fallo_inferencia:
+                # Globo de texto de éxito
+                globo_exito = f"""
+                <div style='background-color: #d4edda; padding: 25px; border-radius: 15px; text-align: center; margin-bottom: 20px; border-left: 5px solid #28a745;'>
+                    <h3 style='color: #155724; margin: 0;'>¡Lo tengo!</h3>
+                    <p style='font-size: 18px; margin-top: 10px;'>Tu actividad es:<br><b>{nodo['texto']}</b></p>
+                </div>
+                """
+                st.markdown(globo_exito, unsafe_allow_html=True)
+                st.write("¿Adiviné correctamente?")
+                
+                col_acierto, col_error = st.columns(2)
+                with col_acierto:
+                    if st.button("¡Sí, acertaste!", type="primary", use_container_width=True):
+                        st.balloons()
+                        st.session_state.nodo_actual = 'root'
+                        st.rerun()
+                with col_error:
+                    if st.button("No, te equivocaste", use_container_width=True):
+                        st.session_state.fallo_inferencia = True
+                        st.rerun()
+                        
+            # --- APRENDIZAJE: INTERFAZ DE ACTUALIZACIÓN ---
+            else:
+                st.warning("¡Vaya! Necesito actualizar mi base de datos algorítmica.")
+                
+                nueva_actividad = st.text_input("1. ¿En qué estabas pensando?", placeholder="Ej: Venta de NFTs")
+                nueva_pregunta = st.text_input("2. ¿Qué le falta o qué diferencia hay entre lo que pensaste y lo que dije?", placeholder=f"Ej: ¿Involucra arte digital? (Donde 'Sí' sea para tu actividad y 'No' para {nodo['texto']})")
+                
+                if st.button("Guardar y Aprender", type="primary"):
+                    if nueva_actividad and nueva_pregunta:
+                        # (Aquí va la misma lógica de guardado matricial de GitHub que ya armamos)
+                        # ...
                 
     # --- RENDERIZADO DE RESULTADOS ---
     elif nodo['tipo'] == 'resultado':
