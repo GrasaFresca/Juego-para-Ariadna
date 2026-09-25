@@ -1,0 +1,41 @@
+﻿nodo_id,tipo,texto,rama_si,rama_no
+root,pregunta,"¿La actividad está vinculada a instrumentos financieros, dinero o activos virtuales?",nodo_1,nodo_2
+nodo_1,pregunta,¿Se lleva a cabo a través de plataformas electrónicas para el intercambio de activos virtuales?,resultado_16,nodo_1_1
+resultado_16,resultado,Fracción XVI. Activos virtuales,,
+nodo_1_1,pregunta,¿Consiste en la prestación de servicios de traslado o custodia de dinero o valores?,resultado_10,nodo_1_2
+resultado_10,resultado,Fracción X. Traslado o custodia,,
+nodo_1_2,pregunta,"¿Es el ofrecimiento habitual de préstamos, operaciones de mutuo o garantía por sujetos distintos a Entidades Financieras?",resultado_4,nodo_1_3
+resultado_4,resultado,Fracción IV. Mutuo o préstamos,,
+nodo_1_3,pregunta,¿Es la emisión o comercialización de cheques de viajero?,resultado_3,nodo_1_4
+resultado_3,resultado,Fracción III. Cheques de viajero,,
+nodo_1_4,pregunta,"¿Es la emisión o comercialización de tarjetas de crédito/servicios, prepagadas o instrumentos de almacenamiento de valor?",resultado_2,sin_resultado
+resultado_2,resultado,Fracción II. Tarjetas e instrumentos de valor,,
+nodo_2,pregunta,¿La actividad involucra bienes físicos muebles o mercancías de alto valor?,nodo_2_1,nodo_3
+nodo_2_1,pregunta,"¿Consiste en la comercialización o distribución de vehículos (aéreos, marítimos o terrestres)?",resultado_8,nodo_2_2
+resultado_8,resultado,Fracción VIII. Vehículos,,
+nodo_2_2,pregunta,¿Es la prestación de servicios de blindaje de vehículos terrestres o bienes inmuebles?,resultado_9,nodo_2_3
+resultado_9,resultado,Fracción IX. Blindaje,,
+nodo_2_3,pregunta,"¿Es la comercialización o intermediación de Metales Preciosos, Piedras Preciosas, joyas o relojes?",resultado_6,nodo_2_4
+resultado_6,resultado,Fracción VI. Metales y Piedras Preciosas,,
+nodo_2_4,pregunta,¿Se trata de la subasta o comercialización de obras de arte?,resultado_7,sin_resultado
+resultado_7,resultado,Fracción VII. Obras de arte,,
+nodo_3,pregunta,"¿La actividad está relacionada directamente con bienes inmuebles (terrenos, casas, desarrollos)?",nodo_3_1,nodo_4
+nodo_3_1,pregunta,¿Consiste en la constitución de derechos personales de uso o goce de bienes inmuebles?,resultado_15,nodo_3_2
+resultado_15,resultado,Fracción XV. Uso o goce de inmuebles,,
+nodo_3_2,pregunta,¿Se trata de la recepción de recursos destinados a llevar a cabo un Desarrollo Inmobiliario cuya finalidad sea su venta o renta?,resultado_5bis,nodo_3_3
+resultado_5bis,resultado,Fracción V Bis. Recepción de recursos para Desarrollo Inmobiliario,,
+nodo_3_3,pregunta,"¿Es la realización de actividades de construcción, desarrollo o intermediación en la transmisión de propiedad?",resultado_5,sin_resultado
+resultado_5,resultado,Fracción V. Construcción o desarrollo de inmuebles,,
+nodo_4,pregunta,"¿La actividad corresponde a la prestación de servicios especializados, juegos o recepción de donativos?",nodo_4_1,sin_resultado_final
+nodo_4_1,pregunta,"¿Está vinculada a la práctica de juegos con apuesta, concursos o sorteos?",resultado_1,nodo_4_2
+resultado_1,resultado,Fracción I. Juegos y sorteos,,
+nodo_4_2,pregunta,¿Consiste en la recepción de donativos por parte de Asociaciones y Sociedades sin fines de lucro?,resultado_13,nodo_4_3
+resultado_13,resultado,Fracción XIII. Recepción de donativos,,
+nodo_4_3,pregunta,"¿Es la prestación de servicios de comercio exterior como agente, apoderado o agencia aduanal?",resultado_14,nodo_4_4
+resultado_14,resultado,Fracción XIV. Servicios de comercio exterior,,
+nodo_4_4,pregunta,¿Corresponde a la prestación de servicios de fe pública realizados por notarios o corredores públicos?,resultado_12,nodo_4_5
+resultado_12,resultado,Fracción XII. Servicios de fe pública,,
+nodo_4_5,pregunta,"¿Es la prestación de servicios profesionales independientes, sin relación laboral, para operaciones como compraventa o manejo de recursos?",resultado_11,sin_resultado
+resultado_11,resultado,Fracción XI. Servicios profesionales,,
+sin_resultado,resultado,No clasificado en esta rama,,
+sin_resultado_final,resultado,La actividad no es considerada vulnerable según el Artículo 17,,
