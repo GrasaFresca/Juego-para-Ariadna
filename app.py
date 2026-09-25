@@ -2,7 +2,8 @@ import streamlit as st
 import pandas as pd
 from github import Github
 import io
-import time  # Importamos time para manejar la pausa de la animación
+import time
+import base64 # Nueva librería para renderizar el video
 
 # 1. Configuración general
 st.set_page_config(page_title="Akinator: Ley AntiLavado", layout="centered")
@@ -123,13 +124,36 @@ elif st.session_state.pantalla == 'juego':
                 
                 col_acierto, col_error = st.columns(2)
                 
-                # ---> AQUÍ ESTÁ EL AJUSTE PARA VOLVER AL INICIO <---
                 with col_acierto:
                     if st.button("¡Sí, acertaste!", type="primary", use_container_width=True):
-                        st.balloons()
-                        st.session_state.pantalla = 'inicio' # Te manda a la Interfaz 1
-                        st.session_state.nodo_actual = 'root' # Resetea el puntero de la matriz
-                        time.sleep(1.5) # Pausa dramática para ver los globos
+                        
+                        # --- ANIMACIÓN DE HUMO VECTEEZY ---
+                        try:
+                            # Lee el archivo físico y lo transforma a código
+                            with open("humo.mp4", "rb") as f:
+                                video_base64 = base64.b64encode(f.read()).decode()
+                            
+                            # Crea una capa HTML que cubre toda la pantalla (100vw/100vh)
+                            humo_html = f"""
+                            <div style='position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; pointer-events: none;'>
+                                <video width="100%" height="100%" autoplay muted style="object-fit: cover; opacity: 0.85;">
+                                    <source src="data:video/mp4;base64,{video_base64}" type="video/mp4">
+                                </video>
+                            </div>
+                            """
+                            # Renderiza el video, espera 3 segundos y lo borra
+                            pantalla_humo = st.empty()
+                            pantalla_humo.markdown(humo_html, unsafe_allow_html=True)
+                            time.sleep(3.5) 
+                            pantalla_humo.empty()
+                            
+                        except FileNotFoundError:
+                            # Si detecta que no has subido humo.mp4, solo hace pausa para no romper el juego
+                            time.sleep(1)
+                            
+                        # Reinicio al menú principal
+                        st.session_state.pantalla = 'inicio'
+                        st.session_state.nodo_actual = 'root'
                         st.rerun()
                         
                 with col_error:
@@ -146,7 +170,6 @@ elif st.session_state.pantalla == 'juego':
                 
                 if st.button("Guardar y Aprender", type="primary"):
                     if nueva_actividad and nueva_pregunta:
-                        # Lógica matricial para inyectar los nuevos nodos
                         id_nueva_pregunta = f"nodo_dinamico_{len(arbol)+1}"
                         id_nuevo_resultado = f"resultado_dinamico_{len(arbol)+2}"
                         
