@@ -8,6 +8,17 @@ import base64 # Nueva librería para renderizar el video
 # 1. Configuración general
 st.set_page_config(page_title="Akinator: Ley AntiLavado", layout="centered")
 
+# --- INYECCIÓN CSS PARA OCULTAR BOTÓN DE PANTALLA COMPLETA ---
+hide_fullscreen_button = """
+<style>
+    button[title="View fullscreen"] {
+        display: none !important;
+    }
+</style>
+"""
+st.markdown(hide_fullscreen_button, unsafe_allow_html=True)
+# -----------------------------------------------------------
+
 # OJO AQUÍ: Pon tu usuario de GitHub. 
 REPO_NAME = "TU_USUARIO/juego-para-ariadna" 
 CSV_FILENAME = "arbol_decisiones_antilavado.csv"
@@ -55,7 +66,7 @@ if st.session_state.pantalla == 'inicio':
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         st.markdown("<h1 style='text-align: center;'>Akinator: Ley AntiLavado</h1>", unsafe_allow_html=True)
-       st.markdown(hide_fullscreen_button, unsafe_allow_html=True)
+        st.image("personaje juego.svg", use_container_width=True)
         st.markdown("<h4 style='text-align: center;'>¿Podré adivinar en qué Actividad Vulnerable estás pensando?</h4>", unsafe_allow_html=True)
         
         if st.button("¡Comenzar a Jugar!", type="primary", use_container_width=True):
