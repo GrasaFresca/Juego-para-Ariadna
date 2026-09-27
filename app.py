@@ -55,7 +55,7 @@ if st.session_state.pantalla == 'inicio':
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         st.markdown("<h1 style='text-align: center;'>Akinator: Ley AntiLavado</h1>", unsafe_allow_html=True)
-        st.info("🖼️ [Espacio reservado para tu logo]")
+        st.image("personaje juego.svg", use_container_width=True)
         st.markdown("<h4 style='text-align: center;'>¿Podré adivinar en qué Actividad Vulnerable estás pensando?</h4>", unsafe_allow_html=True)
         
         if st.button("¡Comenzar a Jugar!", type="primary", use_container_width=True):
