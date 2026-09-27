@@ -8,17 +8,41 @@ import base64 # Nueva librería para renderizar el video
 # 1. Configuración general
 st.set_page_config(page_title="Akinator: Ley AntiLavado", layout="centered")
 
-# --- INYECCIÓN CSS PARA OCULTAR BOTÓN DE PANTALLA COMPLETA ---
-hide_fullscreen_button = """
+# --- INYECCIÓN CSS GLOBAL (Diseño App sin Scroll + Sin botón de imagen) ---
+css_global = """
 <style>
-    button[title="View fullscreen"] {
+    /* 1. Ocultar el botón de pantalla completa de las imágenes */
+    [data-testid="StyledFullScreenButton"], [data-testid="stImage"] button {
         display: none !important;
+        visibility: hidden !important;
+    }
+    
+    /* 2. Ocultar la barra superior (header) y el pie de página (footer) de Streamlit */
+    header {visibility: hidden !important;}
+    footer {display: none !important;}
+    
+    /* 3. Eliminar los márgenes masivos que causan el espacio en blanco abajo */
+    .block-container {
+        padding-top: 2rem !important;
+        padding-bottom: 0rem !important;
+        max-width: 90% !important; /* Aprovecha mejor el ancho de la pantalla */
+    }
+    
+    /* 4. Bloquear el scroll vertical (rueda del mouse) en toda la página */
+    html, body, [data-testid="stAppViewContainer"] {
+        overflow-y: hidden !important;
+        height: 100vh !important;
+    }
+    
+    /* 5. Asegurar que la imagen del genio se auto-ajuste para no desbordar la pantalla */
+    [data-testid="stImage"] img {
+        max-height: 75vh !important;
+        object-fit: contain !important;
     }
 </style>
 """
-st.markdown(hide_fullscreen_button, unsafe_allow_html=True)
+st.markdown(css_global, unsafe_allow_html=True)
 # -----------------------------------------------------------
-
 # OJO AQUÍ: Pon tu usuario de GitHub. 
 REPO_NAME = "TU_USUARIO/juego-para-ariadna" 
 CSV_FILENAME = "arbol_decisiones_antilavado.csv"
