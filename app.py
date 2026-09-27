@@ -144,15 +144,14 @@ elif st.session_state.pantalla == 'juego':
             """
             st.markdown(globo_texto, unsafe_allow_html=True)
             
-            col_si, col_no = st.columns(2)
-            with col_si:
-                if st.button("Sí", use_container_width=True, type="primary"):
-                    st.session_state.nodo_actual = nodo['rama_si']
-                    st.rerun()
-            with col_no:
-                if st.button("No", use_container_width=True):
-                    st.session_state.nodo_actual = nodo['rama_no']
-                    st.rerun()
+            # Botones apilados verticalmente
+            if st.button("Sí", use_container_width=True, type="primary"):
+                st.session_state.nodo_actual = nodo['rama_si']
+                st.rerun()
+                
+            if st.button("No", use_container_width=True):
+                st.session_state.nodo_actual = nodo['rama_no']
+                st.rerun()
                     
         # --- RENDERIZADO DE RESULTADOS ---
         elif nodo['tipo'] == 'resultado':
@@ -167,39 +166,36 @@ elif st.session_state.pantalla == 'juego':
                 st.markdown(globo_exito, unsafe_allow_html=True)
                 st.write("¿Adiviné correctamente?")
                 
-                col_acierto, col_error = st.columns(2)
-                
-                with col_acierto:
-                    if st.button("¡Sí, acertaste!", type="primary", use_container_width=True):
+                # Botones de resultado apilados verticalmente
+                if st.button("¡Sí, acertaste!", type="primary", use_container_width=True):
+                    
+                    # --- ANIMACIÓN DE HUMO VECTEEZY ---
+                    try:
+                        with open("humo.mp4", "rb") as f:
+                            video_base64 = base64.b64encode(f.read()).decode()
                         
-                        # --- ANIMACIÓN DE HUMO VECTEEZY ---
-                        try:
-                            with open("humo.mp4", "rb") as f:
-                                video_base64 = base64.b64encode(f.read()).decode()
-                            
-                            humo_html = f"""
-                            <div style='position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; pointer-events: none;'>
-                                <video width="100%" height="100%" autoplay muted style="object-fit: cover; opacity: 0.85;">
-                                    <source src="data:video/mp4;base64,{video_base64}" type="video/mp4">
-                                </video>
-                            </div>
-                            """
-                            pantalla_humo = st.empty()
-                            pantalla_humo.markdown(humo_html, unsafe_allow_html=True)
-                            time.sleep(3.5) 
-                            pantalla_humo.empty()
-                            
-                        except FileNotFoundError:
-                            time.sleep(1)
-                            
-                        st.session_state.pantalla = 'inicio'
-                        st.session_state.nodo_actual = 'root'
-                        st.rerun()
+                        humo_html = f"""
+                        <div style='position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; pointer-events: none;'>
+                            <video width="100%" height="100%" autoplay muted style="object-fit: cover; opacity: 0.85;">
+                                <source src="data:video/mp4;base64,{video_base64}" type="video/mp4">
+                            </video>
+                        </div>
+                        """
+                        pantalla_humo = st.empty()
+                        pantalla_humo.markdown(humo_html, unsafe_allow_html=True)
+                        time.sleep(3.5) 
+                        pantalla_humo.empty()
                         
-                with col_error:
-                    if st.button("No, te equivocaste", use_container_width=True):
-                        st.session_state.fallo_inferencia = True
-                        st.rerun()
+                    except FileNotFoundError:
+                        time.sleep(1)
+                        
+                    st.session_state.pantalla = 'inicio'
+                    st.session_state.nodo_actual = 'root'
+                    st.rerun()
+                        
+                if st.button("No, te equivocaste", use_container_width=True):
+                    st.session_state.fallo_inferencia = True
+                    st.rerun()
                         
             # --- APRENDIZAJE: INTERFAZ DE ACTUALIZACIÓN ---
             else:
