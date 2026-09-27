@@ -79,7 +79,7 @@ elif st.session_state.pantalla == 'juego':
     col_personaje, col_interfaz = st.columns([1, 1.5], gap="large")
     
     with col_personaje:
-        st.image("personaje juego.jpg", use_container_width=True)
+        st.image("personaje juego.svg", use_container_width=True)
         
     with col_interfaz:
         # --- RENDERIZADO DE PREGUNTAS ---
