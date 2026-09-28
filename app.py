@@ -46,7 +46,7 @@ st.markdown(css_global, unsafe_allow_html=True)
 
 # OJO AQUÍ: Pon tu usuario de GitHub. 
 REPO_NAME = "TU_USUARIO/juego-para-ariadna" 
-CSV_FILENAME = "arbol_decisiones_antilavado.csv"
+CSV_FILENAME = "nuevo_arbol_decisiones_antilavado.csv"
 
 # 2. Funciones de Carga y Guardado
 @st.cache_data(ttl=0) 
